@@ -53,6 +53,5 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to test task list completed 
     steps:
-      - name: Run job
       - uses: abdullahmuhammed5/pr-checklist-checker-action@1.0.0
 ```
