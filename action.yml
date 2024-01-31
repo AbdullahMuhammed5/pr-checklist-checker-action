@@ -2,6 +2,7 @@ name: 'TaskList Completed Checker'
 description: 'Check if all pull request task list are completed.'
 author: 'Abdullah Muhammad'
 runs:
+  using: "composite"
   steps:
     - run: |
         # Get the PR template body to a string variable
