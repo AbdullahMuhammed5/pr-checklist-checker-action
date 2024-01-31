@@ -1,0 +1,26 @@
+name: 'TaskList Completed Checker'
+description: 'Check if all pull request task list are completed.'
+author: 'Abdullah Muhammad'
+runs:
+  steps:
+    - run: |
+        # Get the PR template body to a string variable
+        template="${{ github.event.pull_request.body }}"
+
+        # Read from string and Remove ignored tasks then count unchecked tasks
+        echo "${template}" | sed -n '
+          /<!-- ignore-task-list-start -->/,/<!-- ignore-task-list-end -->/d
+          /^- \[ \]/p
+        ' | wc -l > checklist_count.txt
+
+        if [[ $(cat checklist_count.txt) -eq 0 ]]; then
+          echo "✅ All checkboxes have been checked."
+          exit 0
+        else
+          echo "❌ Some checkboxes hasn't been checked yet."
+          exit 1
+        fi
+      shell: bash
+branding:
+  icon: 'check-square'
+  color: 'green'
